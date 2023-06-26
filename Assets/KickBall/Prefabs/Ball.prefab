@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4756064905846750744}
   - component: {fileID: 2744425500098951335}
   - component: {fileID: 4922963105066650519}
-  - component: {fileID: 9105883286308461953}
+  - component: {fileID: 5304502867182241664}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 32313de7c02444375be8dfb3e92e72e1, type: 2}
+  - {fileID: 2100000, guid: 99d9ae99ba566e44ea4c5c4560862180, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &9105883286308461953
+--- !u!114 &5304502867182241664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,6 +93,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5706561732984709095}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95021a61c53c462e8c63e2f706bc759b, type: 3}
+  m_Script: {fileID: 11500000, guid: 619ac92e4fdd4ad19d828a71fc99684d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

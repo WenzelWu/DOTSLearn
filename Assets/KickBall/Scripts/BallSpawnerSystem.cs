@@ -25,7 +25,8 @@ namespace KickBall
             var config = SystemAPI.GetSingleton<Config>();
             
             if(!Input.GetKeyDown(KeyCode.Return)) return;
-
+            
+            Debug.Log("Spawned Ball");
             var rand = new Random(123);
 
             foreach (var playerTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>())
@@ -42,7 +43,6 @@ namespace KickBall
                     Value = rand.NextFloat2Direction() * config.BallStartVelocity
                 });
             }
-            
         }
 
         [BurstCompile]

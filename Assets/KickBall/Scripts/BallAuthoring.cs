@@ -14,6 +14,7 @@ namespace KickBall
 
                 AddComponent<Ball>(entity);
                 AddComponent<Velocity>(entity);
+                
                 AddComponent<Carry>(entity);
                 SetComponentEnabled<Carry>(entity, false);
             }

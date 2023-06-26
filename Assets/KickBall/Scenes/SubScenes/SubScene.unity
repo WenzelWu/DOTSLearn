@@ -156,10 +156,8 @@ MonoBehaviour:
   ObstacleSpawner: 1
   PlayerSpawner: 1
   PlayerMovement: 1
-  BallSpawner: 0
-  BallMovement: 0
-  NewPlayerMovement: 0
-  NewBallMovement: 0
+  BallSpawner: 1
+  BallMovement: 1
   BallCarry: 0
   BallKicking: 0
 --- !u!114 &176995062
@@ -181,15 +179,16 @@ MonoBehaviour:
   ObstacleOffset: 10
   PlayerOffset: 3
   PlayerSpeed: 7
-  BallStartVelocity: 0
-  BallVelocityDecay: 0
-  BallKickingRange: 0
-  BallKickForce: 0
+  BallStartVelocity: 5
+  BallVelocityDecay: 1
+  BallKickingRange: 4
+  BallKickForce: 8
   ObstaclePrefab: {fileID: 8747683827673579469, guid: 0be6c9cd15fb59d42b081b630733c5a0,
     type: 3}
   PlayerPrefab: {fileID: 655516639402675985, guid: ec711b3c6f2070b438d8617259ab4b87,
     type: 3}
-  BallPrefab: {fileID: 0}
+  BallPrefab: {fileID: 5706561732984709095, guid: be7e0482cc3843542a6f27ecd88bff09,
+    type: 3}
 --- !u!4 &176995063
 Transform:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -31,29 +32,63 @@ namespace KickBall
             var minDist = config.ObstacleRadius + 0.5f;
             var minDistSQ = minDist * minDist;
             
-            // For every entity having a LocalTransform and Player component, a read-write reference to
-            // the LocalTransform is assigned to 'playerTransform'. Player Component is a tag component, help to filter the entity
-            foreach (var playerTrasform in SystemAPI.Query<RefRW<LocalTransform>>().WithAll<Player>())
+            var obstacleQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, Obstacle>().Build();
+            var job = new PlayerMovementJob
             {
-                var newPos = playerTrasform.ValueRO.Position + input;
+                ObstacleTransforms = obstacleQuery.ToComponentDataArray<LocalTransform>(state.WorldUpdateAllocator),
+                Input = input,
+                MinDistSQ = minDistSQ
+            };
+            job.ScheduleParallel();
 
-                foreach (var obstacleTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Obstacle>())
-                {
-                    if (math.distancesq(newPos, obstacleTransform.ValueRO.Position) < minDistSQ)
-                    {
-                        newPos = playerTrasform.ValueRO.Position;
-                        break;
-                    }
-                }
-                
-                playerTrasform.ValueRW.Position = newPos;
-            }
+            // // For every entity having a LocalTransform and Player component, a read-write reference to
+            // // the LocalTransform is assigned to 'playerTransform'. Player Component is a tag component, help to filter the entity
+            // foreach (var playerTrasform in SystemAPI.Query<RefRW<LocalTransform>>().WithAll<Player>())
+            // {
+            //     var newPos = playerTrasform.ValueRO.Position + input;
+            //
+            //     foreach (var obstacleTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Obstacle>())
+            //     {
+            //         if (math.distancesq(newPos, obstacleTransform.ValueRO.Position) < minDistSQ)
+            //         {
+            //             newPos = playerTrasform.ValueRO.Position;
+            //             break;
+            //         }
+            //     }
+            //     
+            //     playerTrasform.ValueRW.Position = newPos;
+            // }
         }
 
         [BurstCompile]
         public void OnDestroy(ref SystemState state)
         {
 
+        }
+        
+        [WithAll(typeof(Player))]
+        [BurstCompile]
+        public partial struct PlayerMovementJob : IJobEntity
+        {
+            [ReadOnly] public NativeArray<LocalTransform> ObstacleTransforms;
+            public float3 Input;
+            public float MinDistSQ;
+            
+            public void Execute(ref LocalTransform transform)
+            {
+                var newPos = transform.Position + Input;
+
+                foreach (var obstacleTransform in ObstacleTransforms)
+                {
+                    if (math.distancesq(newPos, obstacleTransform.Position) < MinDistSQ)
+                    {
+                        newPos = transform.Position;
+                        break;
+                    }
+                }
+                
+                transform.Position = newPos;
+            }
         }
     }
 }
